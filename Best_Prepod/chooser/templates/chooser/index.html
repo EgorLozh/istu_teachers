@@ -1,0 +1,28 @@
+{% extends 'chooser/base.html'%}
+{% block content %}
+{% load static %}
+<body>
+<div class="choose">
+    <div class="container" id={{right_id}}>
+        <div class="right">
+            <img src={{right_img}} width="300" height="400">
+            <a href={{right_link}}>
+                <h3>{{right_name}}</h3>
+            </a>
+        </div>
+        <div class="left" id={{left_id}}>
+            <img src={{left_img}} width="300" height="400">
+            <a href={{left_link}}>
+                <h3>{{left_name}}</h3>
+            </a>
+        </div>
+    </div>
+
+    <form action= {% url 'whos_hotter' %} method="post">
+        {% csrf_token %}
+        <button name="action" value="{{left_id}} {{right_id}}" type="submit">Левый</button>
+        <button name="action" value="{{right_id}} {{left_id}}" type="submit">Правый</button>
+    </form>
+</div>
+</body>
+{% endblock %}

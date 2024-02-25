@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href={% static "css/style.css"%}>
+</head>
+<body>
+<div class="bread_spread">
+    <h1>
+        <a href={% url novigation_url %}>{{novigation_name}}</a>
+    </h1>
+</div>
+{% block content %}{% endblock%}
+</body>
+</html>
