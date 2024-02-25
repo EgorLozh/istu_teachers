@@ -27,9 +27,9 @@ class Whos_hotter(View):
             'novigation_url': 'rating',
             'novigation_name': 'рейтинг',
             'right_id': right.pk,
-            'left_id': left.pk
-            # 'right_link': '',
-            # 'left_link': '',
+            'left_id': left.pk,
+            'right_link': f'https://istu.ru/staff/{right.site_id}',
+            'left_link': f'https://istu.ru/staff/{left.site_id}',
         }
         return render(request, 'chooser/index.html', context=extra_context)
 
@@ -64,9 +64,22 @@ class Full_bd(View):
             reader = csv.reader(f, delimiter='|')
             for row in reader:
                 if row:
+                    site_id = row[0]
                     name = row[1]
                     pict = row[2]
                     descr = row[3]
-                    Teacher.objects.create(name = name, pict = pict, description = descr, rating = 0)
+                    Teacher.objects.create(site_id=site_id, name = name, pict = pict, description = descr, rating = 0)
+
+        return HttpResponse(request, 'Succsess')
+
+class Update_bd(View):
+    def get(self, request):
+        with open('chooser\data\data.csv', 'r', encoding ='utf-8') as f:
+            reader = csv.reader(f, delimiter='|')
+            for row in reader:
+                if row:
+                    site_id = row[0]
+                    name = row[1]
+                    Teacher.objects.filter(name=name).update(site_id=site_id) #что обновлять
 
         return HttpResponse(request, 'Succsess')
